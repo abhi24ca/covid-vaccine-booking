@@ -242,7 +242,7 @@ def collect_user_details(request_header):
     print(
         "===== BE CAREFUL WITH THIS OPTION! AUTO-BOOKING WILL BOOK THE FIRST AVAILABLE CENTRE, DATE, AND A RANDOM SLOT! ====="
     )
-    auto_book = "yes-please"
+    auto_book = "no"
 
     print("\n================================= Captcha Automation =================================\n")
 
@@ -585,6 +585,18 @@ def check_and_book(
                 sys.stdout.flush()
                 time.sleep(1)
             slots_available = False
+            
+            if auto_book=="yes-please":
+                randrow = random.randint(1, len(options))
+                randcol = random.randint(1, len(options[randrow - 1]["slots"]))
+                choice = str(randrow) + "." + str(randcol)
+                print("Random Rows.Column:" + choice)
+            else:
+                choice = inputimeout(
+                    prompt="----------> Wait 20 seconds for Updated Options OR \n----------> Enter a choice e.g: 1.4 for (1st Centre & 4th Slot): ",
+                    timeout=20,
+                )
+
 
     except TimeoutOccurred:
         time.sleep(1)
